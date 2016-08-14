@@ -54,3 +54,4 @@ var incompleteTask = function () {
 		// Append the task list item to the #incomplete-tasks
 }
 
+addButton.addEventListener('click', addButto)
