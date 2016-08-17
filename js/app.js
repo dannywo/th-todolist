@@ -124,4 +124,3 @@ for(var i = 0; i < completedTaskHolder.children.length; i++){
 	//bind events to list item's children (incompleteTask)
 	bindTaskEvents(completedTaskHolder.children[i], incompleteTask)
 }
-
