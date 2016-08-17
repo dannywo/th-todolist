@@ -1,10 +1,12 @@
-// Problem: User interaction doesn't provide desired results.
-// Solution: Add interactivity so the user can manage daily tasks
+// Consider: \
+// adding validation when editing
+// disabling edit on completed tasks
 
 var taskInput = document.getElementById('new-task') // new-task
 var addButton = document.getElementsByTagName('button')[0] // first button
 var incompleteTaskHolder = document.getElementById('incomplete-tasks') //incomplete-tasks
 var completedTaskHolder = document.getElementById('completed-tasks') //completed-tasks
+var error = document.getElementById('errorMsg')
 
 var createNewTaskElement = function(taskString){
 	//create List Item
@@ -42,33 +44,44 @@ var createNewTaskElement = function(taskString){
 
 // Add a new task
 var addTask = function(){
-	console.log("Add task...")
+	if (taskInput.value !== ''){
 	// Create a new list item with the text from #new-task:
-	var taskString = taskInput.value
-	var listItem = createNewTaskElement(taskString)
+	var listItem = createNewTaskElement(taskInput.value)
 	taskInput.value = ''
+	error.innerText = ''
 	//Append listItem to incompleteTaskholder
 	incompleteTaskHolder.appendChild(listItem)
 	bindTaskEvents(listItem, completedTask)
+	} else {
+		error.innerText = "Please enter a task first"
+	}
 }
 
-var editTask = function (){
-	console.log("Edit task...")
 // Edit an existing task
-	// When the Edit button is pressed
-		// if the class of the parent is .editMode
-			//  Switch from .editMode
-			//  label text becomes the input's value
-		// else
-			//Switch to editMode
-			//input value becomes label's text
-			
-		//Toggle .editMode on the parent
+var editTask = function (){
+	var listItem = this.parentNode
+	var editInput = listItem.querySelector('input[type=text]')
+	var label = listItem.querySelector('label')
+	
+	// if the class of the parent is .editMode
+	var containsClass = listItem.classList.contains('editMode')
+	if (containsClass) {
+		//  Switch from .editMode
+		listItem.querySelector('button.edit').innerText = 'Edit'
+		//  label text becomes the input's value
+		 label.innerText = editInput.value
+	} else {
+		//Switch to editMode
+		listItem.querySelector('button.edit').innerText = 'Save'
+		//input value becomes label's text
+		editInput.value = label.innerText
+	}
+	//Toggle .editMode on the parent
+	listItem.classList.toggle('editMode')
 }
 
 // Delete an existing task
 var deleteTask = function () {
-	console.log("Delete task...")
 	// Remove the parent list item from the ul
 	var listItem = this.parentNode
 	var ul = listItem.parentNode
@@ -77,7 +90,6 @@ var deleteTask = function () {
 
 // Mark a task as complete
 var completedTask = function () {
-	console.log("Completed task...")
 	//Append the task list item to the #complete-tasks
 	var listItem = this.parentNode
 	completedTaskHolder.appendChild(listItem)
@@ -86,7 +98,6 @@ var completedTask = function () {
 
 // Mark a task as incomplete
 var incompleteTask = function () {
-	console.log("Incomplete task...")
 	// Append the task list item to the #incomplete-tasks
 	var listItem = this.parentNode
 	incompleteTaskHolder.appendChild(listItem)
@@ -94,7 +105,6 @@ var incompleteTask = function () {
 }
 
 var bindTaskEvents = function(taskListItem, checkBoxEventHandler) {
-	console.log('Bind list item events...')
 	//select taskListItem's children
 	var checkBox = taskListItem.querySelector('input[type=checkbox]'),
 		editButton = taskListItem.querySelector('button.edit'),

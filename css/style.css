@@ -118,3 +118,8 @@ ul li.editMode input[type=text] {
 ul li.editMode label {
   display:none;
 }
+
+#errorMsg {
+  color: red;
+  display: inline-block;
+}
