@@ -119,8 +119,9 @@ var bindTaskEvents = function(taskListItem, checkBoxEventHandler) {
 
 //set the click handler to the addTask function
 addButton.addEventListener('click', addTask)
+// Hitting Enter key will trigger addButton
 taskInput.addEventListener('keyup', function(event){
-	if(event.keyCode == 13){
+	if(event.keyCode === 13){
 		addButton.click()
 		console.log("running enter on keyup")
 	}
