@@ -1,7 +1,7 @@
 // Problem: User interaction doesn't provide desired results.
 // Solution: Add interactivity so the user can manage daily tasks
 
-var taskInput = document.getElementById('new-task').value // new-task
+var taskInput = document.getElementById('new-task') // new-task
 var addButton = document.getElementsByTagName('button')[0] // first button
 var incompleteTaskHolder = document.getElementById('incomplete-tasks') //incomplete-tasks
 var completedTaskHolder = document.getElementById('completed-tasks') //completed-tasks
@@ -18,10 +18,24 @@ var createNewTaskElement = function(taskString){
 	// button.edit
 	var editButton = document.createElement('button')
 	// button.delete
-	var deleteButton = document.createElement('button')
-	// Each elements needs modifying
+	var deleteButton = document.createElement('button')	
+	// Each elements needs modifying	
+	checkBox.type = 'checkbox'
+	editInput.type = 'text'
+	label.innerText = taskString
+	// label.innerText = taskString
+
+	editButton.className = 'edit'
+	editButton.innerHTML = 'Edit'
+	deleteButton.className = 'delete'
+	deleteButton.innerHTML = 'Delete'
 	
 	// Each elements needs appending
+	listItem.appendChild(checkBox)
+	listItem.appendChild(label)
+	listItem.appendChild(editInput)
+	listItem.appendChild(editButton)
+	listItem.appendChild(deleteButton)	
 	
 	return listItem
 }
@@ -30,8 +44,12 @@ var createNewTaskElement = function(taskString){
 var addTask = function(){
 	console.log("Add task...")
 	// Create a new list item with the text from #new-task:
-	var listItem = createNewTaskElement("Some new task")
+	var taskString = taskInput.value
+	var listItem = createNewTaskElement(taskString)
+	taskInput.value = ''
 	//Append listItem to incompleteTaskholder
+	incompleteTaskHolder.appendChild(listItem)
+	bindTaskEvents(listItem, completedTask)
 }
 
 var editTask = function (){
@@ -48,25 +66,31 @@ var editTask = function (){
 		//Toggle .editMode on the parent
 }
 
+// Delete an existing task
 var deleteTask = function () {
 	console.log("Delete task...")
-// Delete an existing task
-	// When the Delete button is pressed
-		// Remove the parent list item from the ul
+	// Remove the parent list item from the ul
+	var listItem = this.parentNode
+	var ul = listItem.parentNode
+	ul.removeChild(listItem)
 }
 
+// Mark a task as complete
 var completedTask = function () {
 	console.log("Completed task...")
-// Mark a task as complete
-	// When the Checkbox is checked
-		//Append the task list item to the #complete-tasks
+	//Append the task list item to the #complete-tasks
+	var listItem = this.parentNode
+	completedTaskHolder.appendChild(listItem)
+	bindTaskEvents(listItem, incompleteTask)
 }
 
+// Mark a task as incomplete
 var incompleteTask = function () {
 	console.log("Incomplete task...")
-// Mark a task as incomplete
-	//When the checkbox is unchecked
-		// Append the task list item to the #incomplete-tasks
+	// Append the task list item to the #incomplete-tasks
+	var listItem = this.parentNode
+	incompleteTaskHolder.appendChild(listItem)
+	bindTaskEvents(listItem, completedTask)
 }
 
 var bindTaskEvents = function(taskListItem, checkBoxEventHandler) {
