@@ -62,7 +62,7 @@ var editTask = function (){
 	var listItem = this.parentNode
 	var editInput = listItem.querySelector('input[type=text]')
 	var label = listItem.querySelector('label')
-	
+
 	// if the class of the parent is .editMode
 	var containsClass = listItem.classList.contains('editMode')
 	if (containsClass) {
@@ -119,6 +119,12 @@ var bindTaskEvents = function(taskListItem, checkBoxEventHandler) {
 
 //set the click handler to the addTask function
 addButton.addEventListener('click', addTask)
+taskInput.addEventListener('keyup', function(event){
+	if(event.keyCode == 13){
+		addButton.click()
+		console.log("running enter on keyup")
+	}
+})
 //Alternate way
 //addButton.onlick = addTask
 
