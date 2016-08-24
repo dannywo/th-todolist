@@ -94,7 +94,7 @@ var completedTask = function () {
 	var listItem = this.parentNode
 	completedTaskHolder.appendChild(listItem)
 	bindTaskEvents(listItem, incompleteTask)
-}
+};
 
 // Mark a task as incomplete
 var incompleteTask = function () {
