@@ -1,4 +1,4 @@
-(function() {
+document.addEventListener('DOMContentLoaded', function(){
     // Consider: \
     // adding validation when editing
     // disabling edit on completed tasks
@@ -94,53 +94,53 @@
         //Append the task list item to the #complete-tasks
         var listItem = this.parentNode
         completedTaskHolder.appendChild(listItem)
-        bindTaskEvents(listItem, incompleteTask)
-    }
+        bindTaskEvents(listItem, incompleteTask);
+    };
 
     // Mark a task as incomplete
     var incompleteTask = function() {
         // Append the task list item to the #incomplete-tasks
-        var listItem = this.parentNode
-        incompleteTaskHolder.appendChild(listItem)
-        bindTaskEvents(listItem, completedTask)
-    }
+        var listItem = this.parentNode;
+        incompleteTaskHolder.appendChild(listItem);
+        bindTaskEvents(listItem, completedTask);
+    };
 
     var bindTaskEvents = function(taskListItem, checkBoxEventHandler) {
         //select taskListItem's children
         var checkBox = taskListItem.querySelector('input[type=checkbox]'),
             editButton = taskListItem.querySelector('button.edit'),
-            deleteButton = taskListItem.querySelector('button.delete')
+            deleteButton = taskListItem.querySelector('button.delete');
             //bind checkBoxEventHandler to checkbox
-        checkBox.onchange = checkBoxEventHandler
+        checkBox.onchange = checkBoxEventHandler;
             //bind editTask to edit button
-        editButton.onclick = editTask
+        editButton.onclick = editTask;
             //bind deleteTask to delete button
-        deleteButton.onclick = deleteTask
-    }
+        deleteButton.onclick = deleteTask;
+    };
 
     //set the click handler to the addTask function
-    addButton.addEventListener('click', addTask)
+    addButton.addEventListener('click', addTask);
         // Hitting Enter key will trigger addButton
     taskInput.addEventListener('keyup', function(event) {
             if (event.keyCode === 13) {
-                addButton.click()
-                console.log("running enter on keyup")
+                addButton.click();
+                console.log("running enter on keyup");
             }
-        })
+        });
         //Alternate way
         //addButton.onlick = addTask
 
     // Cycle over incompleteTaskHolder ul list items
     for (var i = 0; i < incompleteTaskHolder.children.length; i++) {
         //bind events to list item's children (completedTask)
-        bindTaskEvents(incompleteTaskHolder.children[i], completedTask)
+        bindTaskEvents(incompleteTaskHolder.children[i], completedTask);
     }
 
 
     // Cycle over completedTaskHolder ul list items
-    for (var i = 0; i < completedTaskHolder.children.length; i++) {
+    for (i = 0; i < completedTaskHolder.children.length; i++) {
         //bind events to list item's children (incompleteTask)
-        bindTaskEvents(completedTaskHolder.children[i], incompleteTask)
+        bindTaskEvents(completedTaskHolder.children[i], incompleteTask);
     }
 
-})()
+});
